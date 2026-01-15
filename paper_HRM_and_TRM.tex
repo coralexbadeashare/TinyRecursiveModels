@@ -166,6 +166,13 @@ While ImageHRM demonstrates the power of hierarchical reasoning, its reliance on
 \subsection{The "Less is More" Paradigm}
 The Tiny Recursive Model (TRM) challenges the assumption that parameter count equates to reasoning capability. Unlike ImageHRM, which separates planning (H) and execution (L) into distinct neural networks ($\sim$27M parameters), ImageTRM utilizes a \textbf{single, tiny network} (only 2 layers, $\sim$7M parameters) to perform both functions through deep recursion. This massive reduction in parameters ($<1\%$ of typical LLMs) prevents overfitting on smaller medical datasets while maintaining the capacity for complex logical inference through extended recursive depth ($N \times T$).
 
+\begin{figure}[h]
+\centering
+\includegraphics[width=\columnwidth]{ImageTRM.png}
+\caption{ImageTRM Architecture: The vision module injects features directly into the recurrent loop of the single tiny core.}
+\label{fig:trm_arch}
+\end{figure}
+
 \subsection{ImageTRM Architecture}
 ImageTRM employs a recursive state update mechanism: $z_{t+1}, y_{t+1} = f_{net}(z_t, y_t, x)$.
 \begin{itemize}
