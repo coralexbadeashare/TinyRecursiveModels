@@ -60,7 +60,10 @@ class TinyRecursiveReasoningModel_ACTV1Config(BaseModel):
     # Alexia: added
     mlp_t: bool = False # use mlp on L instead of transformer
     puzzle_emb_len: int = 16 # if non-zero, its specified to this value
+    mlp_t: bool = False # use mlp on L instead of transformer
+    puzzle_emb_len: int = 16 # if non-zero, its specified to this value
     no_ACT_continue: bool =  True # No continue ACT loss, only use the sigmoid of the halt which makes much more sense
+    causal: bool = False # If True, use causal masking in attention
 
 class TinyRecursiveReasoningModel_ACTV1Block(nn.Module):
     def __init__(self, config: TinyRecursiveReasoningModel_ACTV1Config) -> None:
@@ -79,7 +82,7 @@ class TinyRecursiveReasoningModel_ACTV1Block(nn.Module):
                 head_dim=config.hidden_size // config.num_heads,
                 num_heads=config.num_heads,
                 num_key_value_heads=config.num_heads,
-                causal=False
+                causal=config.causal
             )
         self.mlp = SwiGLU(
             hidden_size=config.hidden_size,
